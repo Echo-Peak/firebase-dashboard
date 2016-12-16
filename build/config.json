@@ -1,7 +1,6 @@
 {
-    "databaseName": "echopeak-36d8c",
-    "databaseURL": "https://echopeak-36d8c.firebaseio.com/",
-    "admin_service_key": "../../keys/key",
+    "databaseURL": "https://<YOUR PROJECT ID>.firebaseio.com/",
+    "admin_service_key": "<location of service key>",
     "defaultNode": "/",
     "persistToDisk": true,
     "watch": false,
@@ -18,6 +17,5 @@
         "proxy": 5000,
         "dev": 3000
     },
-    "mode": "json",
-    "url": ""
+    "mode": "json"
 }

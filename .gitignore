@@ -1,3 +1,4 @@
 build/DB/*.json
 build/DB/local/*.json
 build/keys/*.json
+build/config.json
