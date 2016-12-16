@@ -1,3 +1,4 @@
+
 @media screen and (min-width: 361px) and (max-width: 420px) {
   * {
     transition: all  0s !important; } }
@@ -226,5 +227,4 @@ input[type='text'][id='clear'], input[type='text'][id='clear']:active, input[typ
 textarea {
   box-shadow: none;
   outline: none; }
-
 

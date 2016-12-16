@@ -6,6 +6,7 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import Toggle from 'material-ui/Toggle';
 
+@observer
 export default class Settings extends Component{
   constructor(props){
     super();
@@ -28,9 +29,9 @@ export default class Settings extends Component{
     let keyboardSave = observables.config.keyboardSave ? 'Enabled' : 'Disabled';
     let persistToDisk = observables.config.persistToDisk ? 'Enabled' : 'Disabled';
     let showRoot = observables.config.editor.showRoot ? 'Enabled' : 'Disabled';
-    let cacheChecking = observables.config.cacheChecking ? 'Enabled' : 'Disabled';
+    let cacheChecking = observables.config.cacheTracking ? 'Enabled' : 'Disabled';
     let close = this.props.close;
-
+    
     return (<div>
       <Popover
       open={this.props.open}
@@ -41,7 +42,7 @@ export default class Settings extends Component{
       <div style={{padding:10 ,width:250}}>
 
         <Toggle onToggle={(e ,bool) => util.toggleCacheChecking(bool)}
-            label={`Toggle caching?`} defaultToggled={observables.config.cacheChecking} />
+            label={`Toggle caching?`} defaultToggled={observables.config.cacheTracking} />
 
       <Toggle onToggle={(e ,bool) => util.setupRoot(bool)}
           label={`Show Root?`} defaultToggled={observables.config.editor.showRoot} />

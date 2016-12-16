@@ -67,19 +67,20 @@ export default class Sidemenu extends Component{
 
       }
 
-      prepareDelete(path){
+      prepareDelete(key){
         let {observables , modify} = this.props.store;
         let active = observables.active;
-
+        let path;
         if(active === '/'){
-          path = `/${path}`
+          path = `/${key}`
         }else{
-          path = `${active}/${path}`;
+          path = `${active}/${key}`;
         }
 
         let confirm = window.confirm(`Are you sure you want to delete '${path}'? `);
         if(confirm){
-          modify.deletePath(path);
+          
+          modify.deletePath(path , key);
         }
       }
       render(){

@@ -30,7 +30,7 @@ export default class _observables{
     watch:false,
     keyboardSave:true,
     persistToDisk:true,
-    cacheChecking:true,
+    cacheTracking:true,
     mode:'json',
     url:'',
     editor:{

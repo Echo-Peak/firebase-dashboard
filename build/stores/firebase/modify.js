@@ -112,9 +112,25 @@ export default class Modify{
       this.msg('Invalid path')
     }
   }
-  @action deletePath(pathname){
-    let index = this.$.nodes.indexOf(pathname);
-    this.$.nodes.splice(index , 1);
+  remap(interate){
+    for(let item = 0; item < interate; item ++){
+      this.$.nodes[item] = item;
+    }
+  }
+  @action deletePath(path , key){
+    let index = this.$.nodes.indexOf(key);
+    let view = JSON.parse(this.$.currentView);
+
+    this.$.nodes = this.$.nodes.filter(e => e !== key);
+    if(Array.isArray(view)){
+      view.splice(index ,1);
+      this.remap(this.$.nodes.length);
+      this.setView(view);
+    }else if(typeof view === 'object' && view !== null){
+        this.setView(null);
+    }
+
+
 
     this.socket.emit('sync',{path:`${this.$.active}/${pathname}` , method:'set' ,data:{}});
   }

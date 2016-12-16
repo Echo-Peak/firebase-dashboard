@@ -64,9 +64,10 @@ export default class firebase_interface{
     this.$.config.persistToDisk = config.persistToDisk;
     this.$.config.watch = config.watch;
     this.$.config.databaseURL = config.databaseURL;
-    this.$.config.cacheChecking = config.cacheChecking;
-    this.$.config.editor.charLimit = 8000 || config.editor.charLimit;
+    this.$.config.cacheTracking = config.cacheTracking;
+    this.$.config.editor.charLimit = config.editor.charLimit || 10000;
     this.socket.emit('query' , config.defaultNode);
+    
     this.setupKeyboard();
     console.log("config loaded.");
   }

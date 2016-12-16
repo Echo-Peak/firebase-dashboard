@@ -300,9 +300,10 @@ webpackJsonp([1],{
 	      this.$.config.persistToDisk = config.persistToDisk;
 	      this.$.config.watch = config.watch;
 	      this.$.config.databaseURL = config.databaseURL;
-	      this.$.config.cacheChecking = config.cacheChecking;
-	      this.$.config.editor.charLimit = 8000 || config.editor.charLimit;
+	      this.$.config.cacheTracking = config.cacheTracking;
+	      this.$.config.editor.charLimit = config.editor.charLimit || 10000;
 	      this.socket.emit('query', config.defaultNode);
+
 	      this.setupKeyboard();
 	      console.log("config loaded.");
 	    }
@@ -3411,22 +3412,23 @@ webpackJsonp([1],{
 	    }
 	  }, {
 	    key: 'prepareDelete',
-	    value: function prepareDelete(path) {
+	    value: function prepareDelete(key) {
 	      var _props$store = this.props.store;
 	      var observables = _props$store.observables;
 	      var modify = _props$store.modify;
 
 	      var active = observables.active;
-
+	      var path = void 0;
 	      if (active === '/') {
-	        path = '/' + path;
+	        path = '/' + key;
 	      } else {
-	        path = active + '/' + path;
+	        path = active + '/' + key;
 	      }
 
 	      var confirm = window.confirm('Are you sure you want to delete \'' + path + '\'? ');
 	      if (confirm) {
-	        modify.deletePath(path);
+
+	        modify.deletePath(path, key);
 	      }
 	    }
 	  }, {
@@ -3551,6 +3553,8 @@ webpackJsonp([1],{
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+	var _class;
+
 	var _react = __webpack_require__(2);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -3583,7 +3587,7 @@ webpackJsonp([1],{
 
 	var Component = _react2.default.Component;
 
-	var Settings = function (_Component) {
+	var Settings = (0, _mobxReact.observer)(_class = function (_Component) {
 	  _inherits(Settings, _Component);
 
 	  function Settings(props) {
@@ -3617,7 +3621,7 @@ webpackJsonp([1],{
 	      var keyboardSave = observables.config.keyboardSave ? 'Enabled' : 'Disabled';
 	      var persistToDisk = observables.config.persistToDisk ? 'Enabled' : 'Disabled';
 	      var showRoot = observables.config.editor.showRoot ? 'Enabled' : 'Disabled';
-	      var cacheChecking = observables.config.cacheChecking ? 'Enabled' : 'Disabled';
+	      var cacheChecking = observables.config.cacheTracking ? 'Enabled' : 'Disabled';
 	      var close = this.props.close;
 
 	      return _react2.default.createElement(
@@ -3637,7 +3641,7 @@ webpackJsonp([1],{
 	            _react2.default.createElement(_Toggle2.default, { onToggle: function onToggle(e, bool) {
 	                return util.toggleCacheChecking(bool);
 	              },
-	              label: 'Toggle caching?', defaultToggled: observables.config.cacheChecking }),
+	              label: 'Toggle caching?', defaultToggled: observables.config.cacheTracking }),
 	            _react2.default.createElement(_Toggle2.default, { onToggle: function onToggle(e, bool) {
 	                return util.setupRoot(bool);
 	              },
@@ -3661,7 +3665,7 @@ webpackJsonp([1],{
 	  }]);
 
 	  return Settings;
-	}(Component);
+	}(Component)) || _class;
 
 	exports.default = Settings;
 
@@ -4900,7 +4904,7 @@ webpackJsonp([1],{
 	      watch: false,
 	      keyboardSave: true,
 	      persistToDisk: true,
-	      cacheChecking: true,
+	      cacheTracking: true,
 	      mode: 'json',
 	      url: '',
 	      editor: {
@@ -5107,10 +5111,28 @@ webpackJsonp([1],{
 	      }
 	    }
 	  }, {
+	    key: 'remap',
+	    value: function remap(interate) {
+	      for (var item = 0; item < interate; item++) {
+	        this.$.nodes[item] = item;
+	      }
+	    }
+	  }, {
 	    key: 'deletePath',
-	    value: function deletePath(pathname) {
-	      var index = this.$.nodes.indexOf(pathname);
-	      this.$.nodes.splice(index, 1);
+	    value: function deletePath(path, key) {
+	      var index = this.$.nodes.indexOf(key);
+	      var view = JSON.parse(this.$.currentView);
+
+	      this.$.nodes = this.$.nodes.filter(function (e) {
+	        return e !== key;
+	      });
+	      if (Array.isArray(view)) {
+	        view.splice(index, 1);
+	        this.remap(this.$.nodes.length);
+	        this.setView(view);
+	      } else if ((typeof view === 'undefined' ? 'undefined' : _typeof(view)) === 'object' && view !== null) {
+	        this.setView(null);
+	      }
 
 	      this.socket.emit('sync', { path: this.$.active + '/' + pathname, method: 'set', data: {} });
 	    }
@@ -6005,8 +6027,8 @@ webpackJsonp([1],{
 	    }, {});
 	  }
 	};
-	// console.warn('stores enabled');
-	// window.STORES = STORES
+	console.warn('stores enabled');
+	window.STORES = STORES;
 
 /***/ },
 
