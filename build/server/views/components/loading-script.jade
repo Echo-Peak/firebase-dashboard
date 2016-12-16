@@ -1,0 +1,21 @@
+script.
+  (function(elm ,counter ,dotLimmit){
+    let loadingInterval = null;
+
+    loadingInterval = setInterval(()=>{
+      counter += 1;
+    if(window.applicationReady){
+      counter = 0;
+      elm.style.display = 'none';
+      clearInterval(loadingInterval);
+      return
+    }
+    if(counter >= dotLimmit){
+      counter = 0;
+        elm.innerText = elm.innerText.replace(/\./g ,'');
+    }else{
+      elm.innerText += '.'
+    }
+  
+  },400);
+  })(document.getElementById('loader') , 0 ,5)

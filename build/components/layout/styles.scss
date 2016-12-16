@@ -1,0 +1,65 @@
+@import "../SCSS/vars";
+$footerHeight:350px;
+$sidebarWidth:300px;
+$headerHeight:50px;
+
+
+//this is for optimzation purposes
+
+*{
+  @include mq('sm'){
+    transition:all  0s !important
+  };
+  @include mq('md'){
+    transition:all  0s !important
+  };
+}
+code {
+  background:#d9d9d9;
+  outline:1px solid #bababa;
+  padding:2px;
+}
+
+
+input[type='text'] , input[type='text']:active , input[type='text']:focus{
+//  @include reset();
+}
+input[type='text'][id='clear'],input[type='text'][id='clear']:active, input[type='text'][id='clear']:focus{
+  @include reset();
+}
+.Layout-main{
+  position: relative;
+  width:100%;
+  height:auto;
+  // height:calc(200vh + #{$footerHeight});
+//  background:rgba(255,120,70 ,0.1);
+  .view{
+    height:100%;
+    width:100%;
+    background:white;
+    position:relative;
+    margin-left: 0px;
+    .child-view{
+      background:white;
+      width:100%;
+      position: relative;
+      top:0;
+      height:auto;
+    //  margin-top:$headerHeight;
+      //padding-bottom: 100px;
+    }
+    &.view-desktop{
+      width:calc(100% - #{$sidebarWidth});
+      margin-left: $sidebarWidth;
+    }
+  }
+
+}
+textarea{
+
+  box-shadow: none;
+  outline:none;
+  //border:
+}
+#json-mode{
+}

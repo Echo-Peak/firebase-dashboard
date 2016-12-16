@@ -1,0 +1,61 @@
+html
+  head
+    - if(env == 'dev')
+        script(src='#{data.cdn}')
+        
+    script(src='https://cdn.socket.io/socket.io-1.4.5.js')
+    link( rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    link(rel="stylesheet", href="styles.css")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+  body
+    .container(id='app')
+      span#loader loading
+      div(id='app')
+        #{content}
+    script.
+      window.APP_STATE = #{context};
+      (function(elm ,counter ,dotLimmit){
+        let loadingInterval = null;
+
+        loadingInterval = setInterval(()=>{
+          counter += 1;
+        if(window.applicationReady){
+          counter = 0;
+          elm.style.display = 'none';
+          clearInterval(loadingInterval);
+          return
+        }
+        if(counter >= dotLimmit){
+          counter = 0;
+            elm.innerText = elm.innerText.replace(/\./g ,'');
+        }else{
+          elm.innerText += '.'
+        }
+      
+      },400);
+      })(document.getElementById('loader') , 0 ,5)
+
+    script.
+        let enviroment = '#{env}';
+        window.metadata = {
+          blog: enviroment === 'dev' && 'blog.localhost' || 'blog.echopeakdev.com'
+        }
+        window.onbeforeunload = function(){
+          
+          if(env !== 'dev'){
+            sockets.System.emit('destroy-route' ,'#{route_id}');
+          }
+        }
+    script(src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js")
+    script.
+      var config = {
+        apiKey: "AIzaSyDgjQ3_wX9PF8Aswe-WZPevEq2CK-J9SaM",
+        authDomain: "portfolio-db-7b388.firebaseapp.com",
+        databaseURL: "https://portfolio-db-7b388.firebaseio.com",
+      };
+        firebase.initializeApp(config);
+    - if(env == 'dev')
+        script(id='dev').
+          #{data.script}
+    script(src='vendors.js')
+    script(src='bundle.js')

@@ -1,0 +1,15 @@
+<html><head><script src="https://cdn.socket.io/socket.io-1.4.5.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/><link rel="stylesheet" href="//cdn.jsdelivr.net/foundation/5.0.2/css/foundation.min.css"/><link rel="stylesheet" href="/styles.css"/><link rel="icon" href="/favicon.ico" type="image/x-icon"/><title>Firebase Dashboard</title><script>window.firebase_dashboard = {
+  config:{"databaseName":"echopeak-36d8c","databaseURL":"https://echopeak-36d8c.firebaseio.com/","admin_service_key":"../../keys/key","defaultNode":"/","persistToDisk":true,"watch":false,"keyboardSave":true,"defaultMode":"json","localDB":"./DB","cacheTracking":true,"editor":{"showRoot":false,"firstRun":true,"charLimit":8000},"ports":{"proxy":5000,"dev":3000},"mode":"json","url":""},
+  env:'dev',
+  sockets:{
+    db:io.connect(`//:5001/firebase` , {reconnect:true})
+  }
+}
+</script><script>window.firebase_dashboard.sockets.dev = io.connect('//:3000' ,{reconnect:true})</script></head><body><span id="loader">loading</span><div id="app"></div><script src="/json-editor.js"></script><script src="/vendors.js"></script><script src="/bundle.js"></script><script id="dev">(function(){
+  let isDev = 'dev';
+  if(isDev === 'dev'){
+    window.firebase_dashboard.sockets.dev.on('reload' ,function(){
+      window.location.reload();
+    })
+  }
+})()</script></body></html>

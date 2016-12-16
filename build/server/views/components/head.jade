@@ -1,0 +1,18 @@
+script(src='https://cdn.socket.io/socket.io-1.4.5.js')
+link( rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+link(rel='stylesheet' href='//cdn.jsdelivr.net/foundation/5.0.2/css/foundation.min.css')
+link(rel="stylesheet", href="/styles.css")
+link(rel='icon' href='/favicon.ico' type='image/x-icon')
+title Firebase Dashboard
+script.
+  window.firebase_dashboard = {
+    config:!{JSON.stringify(config)},
+    env:'#{env}',
+    sockets:{
+      db:io.connect(`//:#{config.ports.proxy + 1}/firebase` , {reconnect:true})
+    }
+  }
+  
+- if(env == 'dev')
+    script().
+      window.firebase_dashboard.sockets.dev = io.connect('//:#{dev_port}' ,{reconnect:true})
