@@ -36,5 +36,5 @@ export let actions = {
     },{})
   }
 }
-console.warn('stores enabled');
-window.STORES = STORES
+// console.warn('stores enabled');
+// window.STORES = STORES
