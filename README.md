@@ -14,7 +14,8 @@ npm install firebase-dashboard
 * real time syncing
 * some configurability
 * ability to sync locally
-* undo an edit
+* undo an edit / delete
+* delete a 'path'
 * revert a 'path' to original edit (base on app instantiation)
 
 ---
