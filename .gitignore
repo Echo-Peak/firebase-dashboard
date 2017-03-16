@@ -1,4 +1,3 @@
-build/DB/*.json
-build/DB/local/*.json
-build/keys/*.json
-build/config.json
+node_modules
+cache
+.vscode

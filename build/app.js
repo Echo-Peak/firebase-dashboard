@@ -7,12 +7,17 @@ let socketServer = require('./server/core/socket-server');
 let jade = require('jade');
 let fs = require('fs');
 
+let browser = process.argv.indexOf('-b');
+if(~browser && process.argv[browser + 1]){
+  browser = process.argv[browser + 1];
+}
 function createApp(browserSync){
     socketServer.init(config);
     new socketServer(config);
       browserSync.init({
       middleware:[history()],
       serveStatic:[path.resolve(__dirname ,'server/static')],
+      browser:browser || 'google chrome', 
       server:{
         baseDir:path.resolve(__dirname ,'server/static')
       },

@@ -6,10 +6,11 @@
     "postinstall":" node ./scripts/post-install.js",
     "app":"node ./build/app.js"
   },
+  "engine": "node >= 6.9.5",
   "author": "Michael Wheeler",
   "license": "MIT",
 
-  "devDependencies":{
+  "dependencies":{
     "gulp":"*",
     "uuid":"*",
     "webpack":"*",
